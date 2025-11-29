@@ -87,10 +87,10 @@ async function loadVideo (id) {
   const videoElement = document.getElementById('video-element')
   const videoLoading = document.getElementById('video-loading')
 
-  // Show player with loading
   videoPlayer.classList.remove('hidden')
   videoLoading.classList.remove('hidden')
   videoElement.style.opacity = '0'
+  document.body.classList.add('no-scroll')
 
   try {
     const url = `${BASE_URL}/content_units?page_size=1&id=${id}&with_files=true&ui_language=pt&content_languages=pt`
@@ -126,6 +126,7 @@ function closeVideoPlayer () {
   videoElement.pause()
   videoElement.src = ''
   videoPlayer.classList.add('hidden')
+  document.body.classList.remove('no-scroll')
 }
 
 /* ---- Render Functions (Pure) ---- */

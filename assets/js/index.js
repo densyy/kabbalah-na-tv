@@ -4,6 +4,8 @@ const BASE_URL = 'https://kabbalahmedia.info/backend'
 let lessons = []
 let collections = []
 let groupedLessons = []
+let currentRowIndex = 0
+let currentCardIndex = 0
 
 window.closeVideoPlayer = closeVideoPlayer
 window.handlePartClick = handlePartClick
@@ -20,6 +22,7 @@ async function main () {
   await getCollectionsFromLessons()
   groupLessons()
   renderLessons()
+  setupTVNavigation()
   stopLoading()
 }
 
@@ -30,6 +33,8 @@ function stopLoading () {
 
     if (loading) loading.style.display = 'none'
     if (app) app.classList.remove('hidden')
+
+    focusCurrentCard()
   }, 500)
 }
 
@@ -198,4 +203,120 @@ function createPartCardHTML (part, partNumber) {
 
 function handlePartClick (idPart) {
   loadVideo(idPart)
+}
+
+/* ---- TV Navigation ---- */
+
+function setupTVNavigation () {
+  document.addEventListener('keydown', handleKeyNavigation)
+}
+
+function handleKeyNavigation (event) {
+  const videoPlayer = document.getElementById('video-player')
+  const errorAlert = document.getElementById('error-alert')
+
+  // Se o video player ou alerta estiver aberto, não navegar
+  if (!videoPlayer.classList.contains('hidden')) {
+    if (event.key === 'Escape' || event.key === 'Backspace') closeVideoPlayer()
+    return
+  }
+
+  if (!errorAlert.classList.contains('hidden')) {
+    if (event.key === 'Enter' || event.key === 'Escape' || event.key === 'Backspace') closeErrorAlert()
+    return
+  }
+
+  const rows = document.querySelectorAll('.lesson-row')
+  if (rows.length === 0) return
+
+  switch (event.key) {
+    case 'ArrowRight':
+      event.preventDefault()
+      navigateRight(rows)
+      break
+    case 'ArrowLeft':
+      event.preventDefault()
+      navigateLeft(rows)
+      break
+    case 'ArrowDown':
+      event.preventDefault()
+      navigateDown(rows)
+      break
+    case 'ArrowUp':
+      event.preventDefault()
+      navigateUp(rows)
+      break
+    case 'Enter':
+      event.preventDefault()
+      selectCurrentCard()
+      break
+  }
+}
+
+function navigateRight (rows) {
+  const currentRow = rows[currentRowIndex]
+  const cards = currentRow.querySelectorAll('.part-card')
+
+  if (currentCardIndex < cards.length - 1) {
+    currentCardIndex++
+    focusCurrentCard()
+  }
+}
+
+function navigateLeft (rows) {
+  if (currentCardIndex > 0) {
+    currentCardIndex--
+    focusCurrentCard()
+  }
+}
+
+function navigateDown (rows) {
+  if (currentRowIndex < rows.length - 1) {
+    currentRowIndex++
+    const newRow = rows[currentRowIndex]
+    const cards = newRow.querySelectorAll('.part-card')
+    currentCardIndex = Math.min(currentCardIndex, cards.length - 1)
+    focusCurrentCard()
+  }
+}
+
+function navigateUp (rows) {
+  if (currentRowIndex > 0) {
+    currentRowIndex--
+    const newRow = rows[currentRowIndex]
+    const cards = newRow.querySelectorAll('.part-card')
+    currentCardIndex = Math.min(currentCardIndex, cards.length - 1)
+    focusCurrentCard()
+  }
+}
+
+function focusCurrentCard () {
+  const rows = document.querySelectorAll('.lesson-row')
+  if (rows.length === 0) return
+
+  const currentRow = rows[currentRowIndex]
+  if (!currentRow) return
+
+  const cards = currentRow.querySelectorAll('.part-card')
+  if (cards.length === 0) return
+
+  const card = cards[currentCardIndex]
+  if (card) {
+    card.focus()
+    card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+  }
+}
+
+function selectCurrentCard () {
+  const rows = document.querySelectorAll('.lesson-row')
+  if (rows.length === 0) return
+
+  const currentRow = rows[currentRowIndex]
+  const cards = currentRow.querySelectorAll('.part-card')
+  const card = cards[currentCardIndex]
+
+  if (card) {
+    const idPart = card.dataset.partId
+    handlePartClick(idPart)
+  }
 }

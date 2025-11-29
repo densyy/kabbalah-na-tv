@@ -4,6 +4,8 @@ const BASE_URL = 'https://kabbalahmedia.info/backend'
 let lessons = []
 let collections = []
 let groupedLessons = []
+window.closeVideoPlayer = closeVideoPlayer
+window.handlePartClick = handlePartClick
 
 /* ---- OnMount ---- */
 
@@ -14,7 +16,7 @@ main()
 async function main () {
   await getLessons()
   await getCollectionsFromLessons()
-  mountCards()
+  groupLessons()
   renderLessons()
   stopLoading()
 }
@@ -53,7 +55,7 @@ async function getCollectionsFromLessons () {
   }
 }
 
-function mountCards () {
+function groupLessons () {
   collections.collections.forEach(c => {
     const idLesson = c.id
     if (!groupedLessons[idLesson]) groupedLessons[idLesson] = []
@@ -78,6 +80,52 @@ function formatDuration (seconds) {
   duration += `${minutes} minuto${minutes !== 1 ? 's' : ''}`
 
   return duration
+}
+
+async function loadVideo (id) {
+  const videoPlayer = document.getElementById('video-player')
+  const videoElement = document.getElementById('video-element')
+  const videoLoading = document.getElementById('video-loading')
+
+  // Show player with loading
+  videoPlayer.classList.remove('hidden')
+  videoLoading.classList.remove('hidden')
+  videoElement.style.opacity = '0'
+
+  try {
+    const url = `${BASE_URL}/content_units?page_size=1&id=${id}&with_files=true&ui_language=pt&content_languages=pt`
+    const response = await fetch(url)
+    const data = await response.json()
+
+    const unit = data.content_units[0]
+    const ptVideo = unit.files.find(file => file.language === 'pt' && file.type === 'video')
+
+    if (ptVideo) {
+      const videoSrc = `https://cdn.kabbalahmedia.info/${ptVideo.id}.mp4`
+      videoElement.src = videoSrc
+      videoElement.load()
+
+      videoElement.oncanplay = () => {
+        videoLoading.classList.add('hidden')
+        videoElement.style.opacity = '1'
+      }
+    } else {
+      console.log('Vídeo em português não encontrado')
+      closeVideoPlayer()
+    }
+  } catch (error) {
+    console.error('Erro ao buscar unidade de conteúdo:', error)
+    closeVideoPlayer()
+  }
+}
+
+function closeVideoPlayer () {
+  const videoPlayer = document.getElementById('video-player')
+  const videoElement = document.getElementById('video-element')
+
+  videoElement.pause()
+  videoElement.src = ''
+  videoPlayer.classList.add('hidden')
 }
 
 /* ---- Render Functions (Pure) ---- */
@@ -114,7 +162,7 @@ function createLessonRowHTML (idLesson, parts) {
 
 function createPartCardHTML (part, partNumber) {
   return `
-    <div class="part-card" tabindex="0" data-lesson-id="${part.idLesson}" data-part-id="${part.idPart}" onclick="handlePartClick('${part.idLesson}', '${part.idPart}')">
+    <div class="part-card" tabindex="0" data-lesson-id="${part.idLesson}" data-part-id="${part.idPart}" onclick="handlePartClick('${part.idPart}')">
       <div class="part-card-thumbnail">
         <span class="part-number">Parte ${partNumber}</span>
       </div>
@@ -129,7 +177,6 @@ function createPartCardHTML (part, partNumber) {
   `
 }
 
-function handlePartClick (idLesson, idPart) {
-  console.log('Clicked:', { idLesson, idPart })
-  // Aqui você pode adicionar a lógica para abrir o player de vídeo
+function handlePartClick (idPart) {
+  loadVideo(idPart)
 }

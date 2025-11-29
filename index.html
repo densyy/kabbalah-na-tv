@@ -19,6 +19,16 @@
       <section id="lessons-container" class="lessons-container"></section>
     </main>
 
+    <!-- Video Player Fullscreen -->
+    <div id="video-player" class="video-player hidden">
+      <button id="video-close" class="video-close" onclick="closeVideoPlayer()">✕</button>
+      <div class="video-loading" id="video-loading">
+        <div class="spinner"></div>
+        <p>Carregando vídeo...</p>
+      </div>
+      <video id="video-element" controls autoplay></video>
+    </div>
+
     <script type="module" src="./assets/js/index.js"></script>
 </body>
 </html>

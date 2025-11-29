@@ -3,6 +3,7 @@
 const BASE_URL = 'https://kabbalahmedia.info/backend'
 let lessons = []
 let collections = []
+let groupedLessons = []
 
 /* ---- OnMount ---- */
 
@@ -13,13 +14,18 @@ main()
 async function main () {
   await getLessons()
   await getCollectionsFromLessons()
+  mountCards()
+  renderLessons()
   stopLoading()
 }
 
 function stopLoading () {
   setTimeout(() => {
     const loading = document.getElementById('loading')
+    const app = document.getElementById('app')
+
     if (loading) loading.style.display = 'none'
+    if (app) app.classList.remove('hidden')
   }, 500)
 }
 
@@ -45,4 +51,85 @@ async function getCollectionsFromLessons () {
   } catch (error) {
     console.log('Error fetching collections:', error)
   }
+}
+
+function mountCards () {
+  collections.collections.forEach(c => {
+    const idLesson = c.id
+    if (!groupedLessons[idLesson]) groupedLessons[idLesson] = []
+
+    c.content_units.forEach(u => {
+      const duration = formatDuration(u.duration)
+      const date = new Date(u.film_date).toLocaleDateString('pt-BR')
+      const title = u.name
+      const idPart = u.id
+
+      groupedLessons[idLesson].push({ duration, date, title, idLesson, idPart })
+    })
+  })
+}
+
+function formatDuration (seconds) {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+
+  let duration = ''
+  if (hours > 0) duration += `${hours} hora${hours !== 1 ? 's' : ''} e `
+  duration += `${minutes} minuto${minutes !== 1 ? 's' : ''}`
+
+  return duration
+}
+
+/* ---- Render Functions (Pure) ---- */
+
+function renderLessons () {
+  const container = document.getElementById('lessons-container')
+  const html = createLessonsHTML(groupedLessons)
+  container.innerHTML = html
+}
+
+function createLessonsHTML (groupedLessons) {
+  return Object.keys(groupedLessons)
+    .map(idLesson => createLessonRowHTML(idLesson, groupedLessons[idLesson]))
+    .join('')
+}
+
+function createLessonRowHTML (idLesson, parts) {
+  const firstPart = parts[0]
+  const lessonDate = firstPart ? firstPart.date : ''
+  const partsCount = parts.length
+
+  return `
+    <article class="lesson-row" data-lesson-id="${idLesson}">
+      <header class="lesson-header">
+        <h2 class="lesson-date">Aula de ${lessonDate}</h2>
+        <span class="lesson-badge">${partsCount} parte${partsCount !== 1 ? 's' : ''}</span>
+      </header>
+      <div class="parts-container">
+        ${parts.map((part, index) => createPartCardHTML(part, index + 1)).join('')}
+      </div>
+    </article>
+  `
+}
+
+function createPartCardHTML (part, partNumber) {
+  return `
+    <div class="part-card" tabindex="0" data-lesson-id="${part.idLesson}" data-part-id="${part.idPart}" onclick="handlePartClick('${part.idLesson}', '${part.idPart}')">
+      <div class="part-card-thumbnail">
+        <span class="part-number">Parte ${partNumber}</span>
+      </div>
+      <div class="part-card-content">
+        <h3 class="part-card-title">${part.title}</h3>
+        <div class="part-card-meta">
+          <span class="part-card-duration">${part.duration}</span>
+          <span class="part-card-date">${part.date}</span>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function handlePartClick (idLesson, idPart) {
+  console.log('Clicked:', { idLesson, idPart })
+  // Aqui você pode adicionar a lógica para abrir o player de vídeo
 }

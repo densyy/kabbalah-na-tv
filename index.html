@@ -29,6 +29,15 @@
       <video id="video-element" controls autoplay></video>
     </div>
 
+    <!-- Error Alert -->
+    <div id="error-alert" class="error-alert hidden">
+      <div class="error-alert-content">
+        <span class="error-alert-icon">⚠</span>
+        <p id="error-alert-message" class="error-alert-message"></p>
+        <button class="error-alert-close" onclick="closeErrorAlert()">Fechar</button>
+      </div>
+    </div>
+
     <script type="module" src="./assets/js/index.js"></script>
 </body>
 </html>

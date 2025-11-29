@@ -4,8 +4,10 @@ const BASE_URL = 'https://kabbalahmedia.info/backend'
 let lessons = []
 let collections = []
 let groupedLessons = []
+
 window.closeVideoPlayer = closeVideoPlayer
 window.handlePartClick = handlePartClick
+window.closeErrorAlert = closeErrorAlert
 
 /* ---- OnMount ---- */
 
@@ -36,7 +38,7 @@ async function getLessons () {
     const response = await fetch(`${BASE_URL}/lessons?page_no=1&page_size=6&withViews=true&content_type=DAILY_LESSON&ui_language=pt&content_languages=pt`)
     lessons = await response.json()
   } catch (error) {
-    console.log('Error fetching lessons:', error)
+    showErrorAlert('Erro ao carregar as aulas. Verifique sua conexão e tente novamente.')
   }
 }
 
@@ -51,7 +53,7 @@ async function getCollectionsFromLessons () {
     const response = await fetch(url)
     collections = await response.json()
   } catch (error) {
-    console.log('Error fetching collections:', error)
+    showErrorAlert('Erro ao carregar os grupos de aulas. Verifique sua conexão e tente novamente.')
   }
 }
 
@@ -110,11 +112,11 @@ async function loadVideo (id) {
         videoElement.style.opacity = '1'
       }
     } else {
-      console.log('Vídeo em português não encontrado')
+      showErrorAlert('Vídeo em português não encontrado para esta aula.')
       closeVideoPlayer()
     }
   } catch (error) {
-    console.error('Erro ao buscar unidade de conteúdo:', error)
+    showErrorAlert('Erro ao carregar o vídeo. Tente novamente mais tarde.')
     closeVideoPlayer()
   }
 }
@@ -126,6 +128,22 @@ function closeVideoPlayer () {
   videoElement.pause()
   videoElement.src = ''
   videoPlayer.classList.add('hidden')
+  document.body.classList.remove('no-scroll')
+}
+
+function showErrorAlert (message) {
+  const errorAlert = document.getElementById('error-alert')
+  const errorMessage = document.getElementById('error-alert-message')
+
+  errorMessage.textContent = message
+  errorAlert.classList.remove('hidden')
+  document.body.classList.add('no-scroll')
+}
+
+function closeErrorAlert () {
+  const errorAlert = document.getElementById('error-alert')
+
+  errorAlert.classList.add('hidden')
   document.body.classList.remove('no-scroll')
 }
 

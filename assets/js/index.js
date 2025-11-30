@@ -35,7 +35,7 @@ function stopLoading () {
     if (app) app.classList.remove('hidden')
 
     focusCurrentCard()
-  }, 500)
+  }, 100)
 }
 
 async function getLessons () {

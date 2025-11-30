@@ -238,6 +238,242 @@ body.no-scroll {
   content: '⏱';
 }
 
+/* ---- Mobile Responsive ---- */
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .logo {
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+  .lessons-container {
+    padding: 16px 16px;
+  }
+
+  .lesson-row {
+    margin-bottom: 32px;
+  }
+
+  .lesson-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+  }
+
+  .lesson-date {
+    font-size: 18px;
+    margin-right: 0;
+  }
+
+  .lesson-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .parts-container {
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+
+  .part-card {
+    width: 260px;
+    border-radius: 12px;
+  }
+
+  .part-card:hover,
+  .part-card:focus {
+    transform: scale(1.02);
+  }
+
+  .part-card-thumbnail {
+    height: 140px;
+  }
+
+  .part-card-thumbnail::after {
+    font-size: 40px;
+  }
+
+  .part-number {
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .part-card-content {
+    padding: 14px;
+  }
+
+  .part-card-title {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .part-card-meta {
+    font-size: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+  }
+
+  #loading {
+    font-size: 16px;
+  }
+
+  .video-close {
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .video-loading {
+    font-size: 16px;
+  }
+
+  .video-loading .spinner {
+    width: 60px;
+    height: 60px;
+  }
+
+  .error-alert-content {
+    padding: 24px 20px;
+    margin: 16px;
+    max-width: calc(100% - 32px);
+    border-radius: 12px;
+  }
+
+  .error-alert-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .error-alert-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .error-alert-close {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .header {
+    padding: 24px 32px;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+
+  .lessons-container {
+    padding: 24px 32px;
+  }
+
+  .lesson-row {
+    margin-bottom: 40px;
+  }
+
+  .lesson-header {
+    margin-bottom: 20px;
+  }
+
+  .lesson-date {
+    font-size: 22px;
+  }
+
+  .lesson-badge {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .parts-container {
+    gap: 16px;
+  }
+
+  .part-card {
+    width: 320px;
+  }
+
+  .part-card-thumbnail {
+    height: 160px;
+  }
+
+  .part-card-thumbnail::after {
+    font-size: 50px;
+  }
+
+  .part-number {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .part-card-content {
+    padding: 18px;
+  }
+
+  .part-card-title {
+    font-size: 18px;
+  }
+
+  .part-card-meta {
+    font-size: 14px;
+  }
+
+  .spinner {
+    width: 80px;
+    height: 80px;
+  }
+
+  #loading {
+    font-size: 20px;
+  }
+
+  .video-close {
+    top: 20px;
+    right: 24px;
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .video-loading {
+    font-size: 20px;
+  }
+
+  .error-alert-content {
+    padding: 32px 40px;
+    max-width: 500px;
+  }
+
+  .error-alert-icon {
+    font-size: 50px;
+  }
+
+  .error-alert-message {
+    font-size: 20px;
+  }
+
+  .error-alert-close {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+}
+
 /* ---- TV Focus (Large Screens) ---- */
 
 @media (min-width: 1920px) {

@@ -22,6 +22,7 @@ async function main () {
   await getCollectionsFromLessons()
   groupLessons()
   renderLessons()
+  setupLazyLoading()
   setupTVNavigation()
   stopLoading()
 }
@@ -188,7 +189,7 @@ function createLessonRowHTML (idLesson, parts) {
 function createPartCardHTML (part, partNumber) {
   return `
     <div class="part-card" tabindex="0" data-lesson-id="${part.idLesson}" data-part-id="${part.idPart}" onclick="handlePartClick('${part.idPart}')">
-      <div class="part-card-thumbnail" style="background-image: url('${part.thumbnail}'); background-size: cover; background-position: center;">
+      <div class="part-card-thumbnail" data-thumbnail="${part.thumbnail}">
         <span class="part-number">Parte ${partNumber}</span>
       </div>
       <div class="part-card-content">
@@ -264,7 +265,7 @@ function navigateRight (rows) {
   }
 }
 
-function navigateLeft (rows) {
+function navigateLeft (_rows) {
   if (currentCardIndex > 0) {
     currentCardIndex--
     focusCurrentCard()
@@ -319,5 +320,47 @@ function selectCurrentCard () {
   if (card) {
     const idPart = card.dataset.partId
     handlePartClick(idPart)
+  }
+}
+
+/* ---- Lazy Loading for Thumbnails ---- */
+
+function setupLazyLoading () {
+  const thumbnails = document.querySelectorAll('.part-card-thumbnail[data-thumbnail]')
+
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const thumbnail = entry.target
+          const imageUrl = thumbnail.dataset.thumbnail
+
+          if (imageUrl) {
+            thumbnail.style.backgroundImage = `url('${imageUrl}')`
+            thumbnail.style.backgroundSize = 'cover'
+            thumbnail.style.backgroundPosition = 'center'
+            thumbnail.removeAttribute('data-thumbnail')
+          }
+
+          observer.unobserve(thumbnail)
+        }
+      })
+    }, {
+      rootMargin: '50px 0px'
+    })
+
+    thumbnails.forEach(thumbnail => {
+      imageObserver.observe(thumbnail)
+    })
+  } else {
+    // Fallback para navegadores sem IntersectionObserver
+    thumbnails.forEach(thumbnail => {
+      const imageUrl = thumbnail.dataset.thumbnail
+      if (imageUrl) {
+        thumbnail.style.backgroundImage = `url('${imageUrl}')`
+        thumbnail.style.backgroundSize = 'cover'
+        thumbnail.style.backgroundPosition = 'center'
+      }
+    })
   }
 }

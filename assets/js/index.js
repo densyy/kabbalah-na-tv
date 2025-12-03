@@ -41,7 +41,7 @@ function stopLoading () {
 
 async function getLessons () {
   try {
-    const response = await fetch(`${BASE_URL}/lessons?page_no=1&page_size=56&withViews=true&content_type=DAILY_LESSON&ui_language=pt&content_languages=pt`)
+    const response = await fetch(`${BASE_URL}/lessons?page_no=1&page_size=5&withViews=true&content_type=DAILY_LESSON&ui_language=pt&content_languages=pt`)
     lessons = await response.json()
   } catch (error) {
     showErrorAlert('Erro ao carregar as aulas. Verifique sua conexão e tente novamente.')

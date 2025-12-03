@@ -111,6 +111,11 @@ body.no-scroll {
   margin-right: 20px;
 }
 
+.lesson-period {
+  color: #3498db;
+  font-weight: 600;
+}
+
 .lesson-badge {
   background-color: #3498db;
   color: white;
@@ -271,6 +276,10 @@ body.no-scroll {
     margin-right: 0;
   }
 
+  .lesson-period {
+    font-size: 16px;
+  }
+
   .lesson-badge {
     font-size: 12px;
     padding: 4px 10px;
@@ -396,6 +405,10 @@ body.no-scroll {
     font-size: 22px;
   }
 
+  .lesson-period {
+    font-size: 20px;
+  }
+
   .lesson-badge {
     font-size: 14px;
     padding: 6px 12px;
@@ -494,6 +507,10 @@ body.no-scroll {
     font-size: 36px;
   }
 
+  .lesson-period {
+    font-size: 32px;
+  }
+
   .lesson-badge {
     font-size: 22px;
     padding: 10px 20px;
@@ -549,6 +566,10 @@ body.no-scroll {
 
   .lesson-date {
     font-size: 44px;
+  }
+
+  .lesson-period {
+    font-size: 38px;
   }
 
   .lesson-badge {

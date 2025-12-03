@@ -66,7 +66,11 @@ async function getCollectionsFromLessons () {
 function groupLessons () {
   collections.collections.forEach(c => {
     const idLesson = c.id
-    if (!groupedLessons[idLesson]) groupedLessons[idLesson] = []
+    const period = c.number === 1 ? 'Manhã' : 'Tarde'
+
+    if (!groupedLessons[idLesson]) {
+      groupedLessons[idLesson] = { period: period, parts: [] }
+    }
 
     c.content_units.forEach(u => {
       const duration = formatDuration(u.duration)
@@ -75,7 +79,7 @@ function groupLessons () {
       const idPart = u.id
       const thumbnail = `https://kabbalahmedia.info/imaginary/thumbnail?url=http://nginx/assets/api/thumbnail/${u.id}&width=400&stripmeta=true`
 
-      groupedLessons[idLesson].push({ duration, date, title, thumbnail, idLesson, idPart })
+      groupedLessons[idLesson].parts.push({ duration, date, title, thumbnail, idLesson, idPart })
     })
   })
 }
@@ -168,7 +172,8 @@ function createLessonsHTML (groupedLessons) {
     .join('')
 }
 
-function createLessonRowHTML (idLesson, parts) {
+function createLessonRowHTML (idLesson, lessonData) {
+  const { period, parts } = lessonData
   const firstPart = parts[0]
   const lessonDate = firstPart ? firstPart.date : ''
   const partsCount = parts.length
@@ -176,7 +181,7 @@ function createLessonRowHTML (idLesson, parts) {
   return `
     <article class="lesson-row" data-lesson-id="${idLesson}">
       <header class="lesson-header">
-        <h2 class="lesson-date">Aula de ${lessonDate}</h2>
+        <h2 class="lesson-date">Aula de ${lessonDate} <span class="lesson-period">(${period})</span></h2>
         <span class="lesson-badge">${partsCount} parte${partsCount !== 1 ? 's' : ''}</span>
       </header>
       <div class="parts-container">

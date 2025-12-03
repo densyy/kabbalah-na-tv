@@ -126,7 +126,7 @@ body.no-scroll {
   display: flex;
   gap: 24px;
   overflow-x: auto;
-  padding-bottom: 20px;
+  padding: 20px 40px 20px 24px;
   scroll-behavior: smooth;
 }
 
@@ -278,7 +278,7 @@ body.no-scroll {
 
   .parts-container {
     gap: 12px;
-    padding-bottom: 12px;
+    padding: 12px 20px 12px 12px;
   }
 
   .part-card {
@@ -403,6 +403,7 @@ body.no-scroll {
 
   .parts-container {
     gap: 16px;
+    padding: 16px 32px 16px 16px;
   }
 
   .part-card {
@@ -529,6 +530,7 @@ body.no-scroll {
 
   .parts-container {
     gap: 32px;
+    padding: 20px 60px 20px 40px;
   }
 }
 
@@ -585,6 +587,7 @@ body.no-scroll {
 
   .parts-container {
     gap: 40px;
+    padding: 20px 80px 20px 60px;
   }
 }
 

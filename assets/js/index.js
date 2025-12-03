@@ -72,8 +72,9 @@ function groupLessons () {
       const date = new Date(u.film_date + 'T00:00:00').toLocaleDateString('pt-BR')
       const title = u.name
       const idPart = u.id
+      const thumbnail = `https://kabbalahmedia.info/imaginary/thumbnail?url=http://nginx/assets/api/thumbnail/${u.id}&width=400&stripmeta=true`
 
-      groupedLessons[idLesson].push({ duration, date, title, idLesson, idPart })
+      groupedLessons[idLesson].push({ duration, date, title, thumbnail, idLesson, idPart })
     })
   })
 }
@@ -187,7 +188,7 @@ function createLessonRowHTML (idLesson, parts) {
 function createPartCardHTML (part, partNumber) {
   return `
     <div class="part-card" tabindex="0" data-lesson-id="${part.idLesson}" data-part-id="${part.idPart}" onclick="handlePartClick('${part.idPart}')">
-      <div class="part-card-thumbnail">
+      <div class="part-card-thumbnail" style="background-image: url('${part.thumbnail}'); background-size: cover; background-position: center;">
         <span class="part-number">Parte ${partNumber}</span>
       </div>
       <div class="part-card-content">

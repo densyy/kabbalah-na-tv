@@ -118,21 +118,20 @@ body.no-scroll {
 }
 
 .lesson-period-badge {
-  background-color: #f8f9fa;
-  color: #666;
+  background-color: #e8f4fc;
+  color: #2980b9;
   padding: 6px 12px;
   border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  border: 1px solid #e9ecef;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .lesson-badge {
   background-color: #3498db;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -210,14 +209,14 @@ body.no-scroll {
 
 .part-number {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 12px;
+  left: 12px;
   background-color: #3498db;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .part-card-content {

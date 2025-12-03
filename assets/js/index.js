@@ -69,7 +69,7 @@ function groupLessons () {
 
     c.content_units.forEach(u => {
       const duration = formatDuration(u.duration)
-      const date = new Date(u.film_date).toLocaleDateString('pt-BR')
+      const date = new Date(u.film_date + 'T00:00:00').toLocaleDateString('pt-BR')
       const title = u.name
       const idPart = u.id
 

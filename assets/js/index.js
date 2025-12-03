@@ -181,8 +181,11 @@ function createLessonRowHTML (idLesson, lessonData) {
   return `
     <article class="lesson-row" data-lesson-id="${idLesson}">
       <header class="lesson-header">
-        <h2 class="lesson-date">Aula de ${lessonDate} <span class="lesson-period">(${period})</span></h2>
-        <span class="lesson-badge">${partsCount} parte${partsCount !== 1 ? 's' : ''}</span>
+        <h2 class="lesson-date">Aula de ${lessonDate}</h2>
+        <div class="lesson-badges">
+          <span class="lesson-period-badge">${period}</span>
+          <span class="lesson-badge">${partsCount} parte${partsCount !== 1 ? 's' : ''}</span>
+        </div>
       </header>
       <div class="parts-container">
         ${parts.map((part, index) => createPartCardHTML(part, index + 1)).join('')}

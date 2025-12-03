@@ -99,6 +99,7 @@ body.no-scroll {
 .lesson-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 3px solid #3498db;
@@ -108,12 +109,22 @@ body.no-scroll {
   font-size: 28px;
   font-weight: bold;
   color: #1a1a2e;
-  margin-right: 20px;
 }
 
-.lesson-period {
-  color: #3498db;
-  font-weight: 600;
+.lesson-badges {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.lesson-period-badge {
+  background-color: #f8f9fa;
+  color: #666;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 1px solid #e9ecef;
 }
 
 .lesson-badge {
@@ -276,8 +287,13 @@ body.no-scroll {
     margin-right: 0;
   }
 
-  .lesson-period {
-    font-size: 16px;
+  .lesson-badges {
+    gap: 8px;
+  }
+
+  .lesson-period-badge {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 
   .lesson-badge {
@@ -405,8 +421,13 @@ body.no-scroll {
     font-size: 22px;
   }
 
-  .lesson-period {
-    font-size: 20px;
+  .lesson-badges {
+    gap: 10px;
+  }
+
+  .lesson-period-badge {
+    font-size: 16px;
+    padding: 5px 10px;
   }
 
   .lesson-badge {
@@ -507,8 +528,13 @@ body.no-scroll {
     font-size: 36px;
   }
 
-  .lesson-period {
-    font-size: 32px;
+  .lesson-badges {
+    gap: 16px;
+  }
+
+  .lesson-period-badge {
+    font-size: 24px;
+    padding: 8px 16px;
   }
 
   .lesson-badge {
@@ -568,8 +594,13 @@ body.no-scroll {
     font-size: 44px;
   }
 
-  .lesson-period {
-    font-size: 38px;
+  .lesson-badges {
+    gap: 20px;
+  }
+
+  .lesson-period-badge {
+    font-size: 28px;
+    padding: 10px 20px;
   }
 
   .lesson-badge {

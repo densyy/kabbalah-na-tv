@@ -41,7 +41,7 @@ function stopLoading () {
 
 async function getLessons () {
   try {
-    const response = await fetch(`${BASE_URL}/lessons?page_no=1&page_size=6&withViews=true&content_type=DAILY_LESSON&ui_language=pt&content_languages=pt`)
+    const response = await fetch(`${BASE_URL}/lessons?page_no=1&page_size=56&withViews=true&content_type=DAILY_LESSON&ui_language=pt&content_languages=pt`)
     lessons = await response.json()
   } catch (error) {
     showErrorAlert('Erro ao carregar as aulas. Verifique sua conexão e tente novamente.')
@@ -53,7 +53,7 @@ async function getCollectionsFromLessons () {
   if (ids.length === 0) return
 
   const idParams = ids.map(id => `id=${id}`).join('&')
-  const url = `${BASE_URL}/collections?page_size=6&${idParams}&ui_language=pt&content_languages=pt`
+  const url = `${BASE_URL}/collections?page_size=5&${idParams}&ui_language=pt&content_languages=pt`
 
   try {
     const response = await fetch(url)
